@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="FoodLog Suite">
+    <test name="Auth Tests">
+        <classes>
+            <class name="com.foodlog.tests.SignupTests"/>
+            <class name="com.foodlog.tests.LoginTests"/>
+        </classes>
+    </test>
+    <test name="Core Flow Tests">
+        <classes>
+            <class name="com.foodlog.tests.NavigationTests"/>
+            <class name="com.foodlog.tests.MealTests"/>
+        </classes>
+    </test>
+</suite>
