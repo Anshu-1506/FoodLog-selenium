@@ -1,49 +1,79 @@
-# FoodLog Selenium Test Automation Suite
+# 🧪 FoodLog – Selenium Test Automation Suite
 
-Automated UI test suite for [FoodLog](https://github.com/Anshu-1506/FoodLog) — an AI-powered nutrition tracking web app — built using Selenium WebDriver, TestNG, and the Page Object Model (POM) design pattern.
+![Java](https://img.shields.io/badge/Java-17-orange?logo=openjdk)
+![Selenium](https://img.shields.io/badge/Selenium-4.24.0-43B02A?logo=selenium)
+![TestNG](https://img.shields.io/badge/TestNG-7.10.2-red)
+![Maven](https://img.shields.io/badge/Build-Maven-C71A36?logo=apachemaven)
+![Status](https://img.shields.io/badge/Tests-16%2F16%20Passing-brightgreen)
 
-**App under test:** https://github.com/Anshu-1506/FoodLog
-**Live app:** https://food-log-rose.vercel.app/
+Automated UI regression suite for **[FoodLog](https://github.com/Anshu-1506/FoodLog)** — an AI-powered nutrition tracking web app. Built with Selenium WebDriver, TestNG, and the Page Object Model to verify signup, login, navigation, and meal-logging flows end-to-end in a real browser.
 
----
-
-## Overview
-
-This suite covers 16 automated test cases across signup, login, navigation, and meal-logging flows, verifying both UI behavior and form validation logic end-to-end in a real browser.
-
-| Module | Test Cases | Coverage |
-|---|---|---|
-| Signup | TC01–TC05 | Valid signup, duplicate email, mismatched passwords, short password, empty fields |
-| Login | TC06–TC10 | Valid login, wrong password, unregistered email, empty fields, signup link |
-| Navigation | TC11–TC14 | Protected route redirect, dashboard load, sidebar navigation, logout session end |
-| Meal Logging | TC15–TC16 | AI-powered meal logging (OpenRouter), empty meal input validation |
+🔗 **App under test:** [FoodLog Repository](https://github.com/Anshu-1506/FoodLog)
+🌐 **Live app:** [food-log-rose.vercel.app](https://food-log-rose.vercel.app/)
 
 ---
 
-## Tech Stack
+## 📋 Test Coverage
 
-- **Java 17**
-- **Selenium WebDriver 4.24.0**
-- **TestNG 7.10.2**
-- **Maven** (build & dependency management)
-- **Page Object Model** architecture with explicit waits (no `Thread.sleep`)
-- Automatic failure screenshots saved to `target/screenshots`
+16 automated test cases spanning the app's core user flows:
 
----
-
-## Prerequisites
-
-Since this suite tests FoodLog's UI, the **FoodLog app must be running locally** before executing tests. You'll need:
-
-- **Java JDK 17+**
-- **Maven 3.8+**
-- **Google Chrome** (Selenium Manager handles the matching ChromeDriver automatically)
-- **Node.js** (to run the FoodLog frontend/backend)
-- **MongoDB** (local instance or Atlas connection for FoodLog's backend)
+| # | Module | Test Cases | What's Verified |
+|---|--------|-----------|------------------|
+| 1 | **Signup** | TC01–TC05 | Valid signup, duplicate email rejection, mismatched passwords, password length validation, empty field handling |
+| 2 | **Login** | TC06–TC10 | Valid login, wrong password, unregistered email, empty fields, redirect to signup |
+| 3 | **Navigation** | TC11–TC14 | Protected route redirection, dashboard load, sidebar navigation, session termination on logout |
+| 4 | **Meal Logging** | TC15–TC16 | AI-powered meal logging via OpenRouter, empty input validation |
 
 ---
 
-## Setup & Running the Tests
+## 🛠️ Tech Stack
+
+- **Language:** Java 17
+- **Automation:** Selenium WebDriver 4.24.0
+- **Test Framework:** TestNG 7.10.2
+- **Build Tool:** Maven
+- **Design Pattern:** Page Object Model (POM)
+- **Wait Strategy:** Explicit waits only — no `Thread.sleep`
+- **Reporting:** TestNG HTML reports + automatic failure screenshots
+
+---
+
+## 📁 Project Structure
+
+src/test/java/com/foodlog/
+├── base/ # WebDriver lifecycle, shared setup/teardown
+├── utils/ # Config: base URL, headless toggle, test data generation
+├── pages/ # Page Object classes
+│ ├── LoginPage.java
+│ ├── SignupPage.java
+│ ├── DashboardPage.java
+│ ├── SidebarComponent.java
+│ ├── AddMealPage.java
+│ └── MealsHistoryPage.java
+└── tests/ # Test classes
+├── SignupTests.java
+├── LoginTests.java
+├── NavigationTests.java
+└── MealTests.java
+
+
+---
+
+## ⚙️ Prerequisites
+
+Since this suite drives FoodLog's actual UI, the app must be **running locally** before tests execute.
+
+| Requirement | Purpose |
+|---|---|
+| Java JDK 17+ | Runs the test suite |
+| Maven 3.8+ | Build & dependency management |
+| Google Chrome | Browser under automation (ChromeDriver auto-managed by Selenium) |
+| Node.js | Runs FoodLog's frontend & backend |
+| MongoDB | FoodLog's database (local or Atlas) |
+
+---
+
+## 🚀 Getting Started
 
 ### 1. Clone both repositories
 ```bash
@@ -52,55 +82,49 @@ git clone https://github.com/Anshu-1506/foodlog-selenium.git
 ```
 
 ### 2. Start the FoodLog app
+
+**Backend:**
 ```bash
-# Backend
 cd FoodLog/backend
 npm install
 npm run dev
+```
+Set `.env` with `MONGODB_URI`, `JWT_SECRET`, and `OPENROUTER_API_KEY`.
 
-# Frontend (new terminal)
+**Frontend** (in a new terminal):
+```bash
 cd FoodLog/frontend
 npm install
 npm run dev
 ```
-Ensure the backend `.env` includes `MONGODB_URI`, `JWT_SECRET`, and `OPENROUTER_API_KEY`. Confirm the frontend is served at `http://localhost:5173` (or update `Config.java` if different).
+Confirm it's served at `http://localhost:5173` — update `Config.java` if your port differs.
 
-### 3. Run the test suite
+### 3. Run the tests
 ```bash
 cd foodlog-selenium
 mvn clean test
 ```
 
-To run in headless mode:
+Run headless:
 ```bash
 mvn clean test -Dheadless=true
 ```
 
-### 4. View results
-- Console output shows pass/fail summary.
-- Failure screenshots are saved to `target/screenshots/`.
-- Full TestNG report: `target/surefire-reports/index.html`
+### 4. View the results
+- Terminal shows a pass/fail summary
+- Failure screenshots → `target/screenshots/`
+- Full HTML report → `target/surefire-reports/index.html`
 
 ---
 
-## Project Structure
+## 🐞 Bug Found During Testing
 
-src/test/java/com/foodlog/
-├── base/ → WebDriver setup/teardown, shared test utilities
-├── utils/ → Config (base URL, headless toggle, unique email generator)
-├── pages/ → Page Object classes (Login, Signup, Dashboard, Sidebar, AddMeal, etc.)
-└── tests/ → Test classes (Signup, Login, Navigation, Meal)
-
+While automating the logout flow, a real `ElementClickInterceptedException` surfaced — a sidebar overlay was blocking the logout button click. **Fixed** by scrolling the element into view before interacting, with a JavaScript-click fallback for edge cases. This wasn't a synthetic test scenario — it's an actual defect this suite caught and resolved.
 
 ---
 
-## Notable Bug Found & Fixed
-
-During development, the logout button click intermittently failed with `ElementClickInterceptedException` due to a sidebar overlay. Fixed by scrolling the element into view before clicking, with a JavaScript-click fallback — a real regression caught and resolved through this suite, not a synthetic test case.
-
----
-
-## Author
+## 👤 Author
 
 **Anshuman Tiwari**
+B.Tech CSE, ABES Institute of Technology
 [GitHub](https://github.com/Anshu-1506) · [LinkedIn](https://www.linkedin.com/in/anshuman-tiwari-41bb64368)
